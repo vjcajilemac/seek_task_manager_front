@@ -1,15 +1,15 @@
-import axios from "axios";
-import { Task } from "@/types/Task";
+import axiosInstance from "./axiosInstance";  // Cambiamos axios por axiosInstance
+import { Task } from "../types/Task";
 
-const API_URL = "http://127.0.0.1:8000/tasks"; // Cambia esto al URL correcto de tu backend
+const API_URL = "/tasks";  // 📌 Base URL se configura en axiosInstance
 
 // Obtener todas las tareas
 export const getTasks = async (): Promise<Task[]> => {
   try {
-    const response = await axios.get<Task[]>(API_URL);
+    const response = await axiosInstance.get<Task[]>(API_URL);
     return response.data;
   } catch (error) {
-    console.error("Error fetching tasks:", error);
+    console.error("Error al obtener tareas:", error);
     throw error;
   }
 };
@@ -17,24 +17,24 @@ export const getTasks = async (): Promise<Task[]> => {
 // Crear una nueva tarea
 export const createTask = async (task: Omit<Task, "id">): Promise<Task> => {
   try {
-    const response = await axios.post<Task>(API_URL, task);
+    const response = await axiosInstance.post<Task>(API_URL, task);
     return response.data;
   } catch (error) {
-    console.error("Error creating task:", error);
+    console.error("Error al crear la tarea:", error);
     throw error;
   }
 };
 
-// Actualizar el estado de una tarea
+// Actualizar una tarea existente
 export const updateTask = async (
   id: string,
-  task: Omit<Task, "id">
+  task: Partial<Omit<Task, "id">>
 ): Promise<Task> => {
   try {
-    const response = await axios.put<Task>(`${API_URL}/${id}`, task);
+    const response = await axiosInstance.put<Task>(`${API_URL}/${id}`, task);
     return response.data;
   } catch (error) {
-    console.error("Error updating task:", error);
+    console.error("Error al actualizar la tarea:", error);
     throw error;
   }
 };
@@ -42,9 +42,9 @@ export const updateTask = async (
 // Eliminar una tarea
 export const deleteTask = async (id: string): Promise<void> => {
   try {
-    await axios.delete(`${API_URL}/${id}`);
+    await axiosInstance.delete(`${API_URL}/${id}`);
   } catch (error) {
-    console.error("Error deleting task:", error);
+    console.error("Error al eliminar la tarea:", error);
     throw error;
   }
 };

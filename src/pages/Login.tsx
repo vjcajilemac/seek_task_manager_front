@@ -1,31 +1,42 @@
 import React, { useState } from 'react';
-import { Box, TextField, Button, Typography } from '@mui/material';
+import { Box, TextField, Button, Typography, Alert } from '@mui/material';
 import AuthLayout from '../layouts/AuthLayout';
+import { login } from '../api/authService';
+import { useNavigate } from 'react-router-dom';
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState('');
+  const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage(null);  // Limpiar cualquier mensaje de error previo
 
-    // Aquí deberías realizar la llamada a la API para autenticar al usuario.
     try {
-      console.log('Intentando iniciar sesión con:', { email, password });
-      // Lógica para autenticar
-    } catch (error) {
-      console.error('Error iniciando sesión:', error);
+      // 👇 Llamada a la API de Login
+      const response = await login(user, password);
+      console.log('Login successful', response);
+
+      // 🚀 Redirigir al Dashboard (ruta principal)
+      navigate('/');
+    } catch (error: any) {
+      console.error('Login error:', error.message);
+      setErrorMessage(error.message);  // Mostrar el mensaje de error al usuario
     }
   };
 
   return (
     <AuthLayout title="Login">
       <Box component="form" onSubmit={handleSubmit} sx={{ mt: 2 }}>
+        {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
+
         <TextField
-          label="Email"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          label="User"
+          type="text"
+          value={user}
+          onChange={(e) => setUser(e.target.value)}
           fullWidth
           margin="normal"
           required
@@ -48,9 +59,6 @@ const Login: React.FC = () => {
         >
           Login
         </Button>
-        <Typography variant="body2" align="center" sx={{ mt: 2 }}>
-          Don't have an account? <a href="/register">Register here</a>
-        </Typography>
       </Box>
     </AuthLayout>
   );
