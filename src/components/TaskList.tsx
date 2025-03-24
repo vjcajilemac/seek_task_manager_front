@@ -1,7 +1,17 @@
-import React from 'react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, IconButton } from '@mui/material';
-import { Delete as DeleteIcon, Edit as EditIcon } from '@mui/icons-material';
-import { Task } from '../types/Task';
+import React from "react";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Typography,
+  IconButton,
+} from "@mui/material";
+import { Delete as DeleteIcon, Edit as EditIcon } from "@mui/icons-material";
+import { Task } from "../types/Task";
 
 interface TaskListProps {
   tasks: Task[];
@@ -9,16 +19,20 @@ interface TaskListProps {
   onEditTask: (task: Task) => void;
 }
 
-const TaskList: React.FC<TaskListProps> = ({ tasks, onDeleteTask, onEditTask }) => {
+const TaskList: React.FC<TaskListProps> = ({
+  tasks,
+  onDeleteTask,
+  onEditTask,
+}) => {
   return (
     <TableContainer component={Paper} sx={{ mt: 2 }}>
       <Table>
         <TableHead>
           <TableRow>
-            <TableCell sx={{ fontWeight: 'bold' }}>Title</TableCell>
-            <TableCell sx={{ fontWeight: 'bold' }}>Description</TableCell>
-            <TableCell sx={{ fontWeight: 'bold' }}>Status</TableCell>
-            <TableCell sx={{ fontWeight: 'bold' }}>Actions</TableCell>
+            <TableCell sx={{ fontWeight: "bold" }}>Title</TableCell>
+            <TableCell sx={{ fontWeight: "bold" }}>Description</TableCell>
+            <TableCell sx={{ fontWeight: "bold" }}>Status</TableCell>
+            <TableCell sx={{ fontWeight: "bold" }}>Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -32,7 +46,10 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, onDeleteTask, onEditTask }) 
                   <IconButton color="primary" onClick={() => onEditTask(task)}>
                     <EditIcon />
                   </IconButton>
-                  <IconButton color="error" onClick={() => onDeleteTask(task._id)}>
+                  <IconButton
+                    color="error"
+                    onClick={() => onDeleteTask(task._id || "")}
+                  >
                     <DeleteIcon />
                   </IconButton>
                 </TableCell>
@@ -41,7 +58,9 @@ const TaskList: React.FC<TaskListProps> = ({ tasks, onDeleteTask, onEditTask }) 
           ) : (
             <TableRow>
               <TableCell colSpan={4} align="center">
-                <Typography variant="h6" color="text.secondary">No hay tareas disponibles</Typography>
+                <Typography variant="h6" color="text.secondary">
+                  No hay tareas disponibles
+                </Typography>
               </TableCell>
             </TableRow>
           )}

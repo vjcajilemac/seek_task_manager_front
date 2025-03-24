@@ -53,7 +53,7 @@ const TaskFormModal: React.FC<TaskFormModalProps> = ({ open, onClose, onTaskCrea
   const handleSaveTask = async () => {
     try {
       if (editingTask) {
-        const updatedTask = await updateTask(editingTask._id, { title, description, status });
+        const updatedTask = await updateTask(editingTask?._id || '', { title, description, status });
         onTaskUpdated(updatedTask);
       } else {
         const newTask = await createTask({ title, description, status });

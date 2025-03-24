@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import { AppBar,IconButton, Toolbar, Typography } from '@mui/material';
 import { Menu as MenuIcon} from '@mui/icons-material';
@@ -24,7 +24,7 @@ const Header = () => {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap component="div">
-            Task Manager Dashboard
+            Seek Task Manager
           </Typography>
         </Toolbar>
       </AppBar>
