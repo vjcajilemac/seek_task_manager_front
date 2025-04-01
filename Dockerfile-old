@@ -14,7 +14,7 @@ RUN yarn
 COPY . .
 
 # Exponer el puerto en el que la aplicación correrá
-EXPOSE 5173
+EXPOSE 3000
 
 # Comando para correr la aplicación
-CMD ["yarn", "run", "dev-exposed"]
+CMD ["yarn", "run", "start-watch"]
